@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2>Vehicle Details</h2>
+
+<table>
+  <tr>
+      <th></th>
+    <th>Vehicle Name</th>
+    <th> Color</th>
+    <th>Model</th>
+    <th>Type</th>
+  </tr>
+  <tr *ngFor="let vehc of vehicles">
+    
+    <td> {{vehc.id}}</td>
+    <td>{{vehc.vehicleName}}</td>
+    <td>{{vehc.color}}</td>
+    <td>{{vehc.vehicleModel}}</td>
+    <td>{{vehc.vehicleType}}</td>
+  </tr>
+ 
+ </table>
+
+</body>
+</html>
+
+ <button class="btn btn-primary" (click)="submitVehicle();">BatchSubmit</button>
+ <p>save all records without the one having error
+ <input type="checkbox" [checked]="saveAll" (change)="changeChckBox()"/>
+</p>
+<div class="container">
+  <div [hidden]="submitted">
+    <h1>Vehicle Form</h1>
+    <form (ngSubmit)="onSubmit()" #vehicleForm="ngForm">
+      <div class="form-group">
+        <label for="vehicleName">Vechile Name</label>
+        <input type="text" class="form-control" id="vehicleName"
+               required
+               [(ngModel)]="model.vehicleName" name="vehicleName"
+               #vehicleName="ngModel">
+        <div [hidden]="vehicleName.valid || vehicleName.pristine"
+             class="alert alert-danger">
+          Vehicle name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="color">Color</label>
+        <input type="text" class="form-control" id="color"
+               [(ngModel)]="model.color" name="colors">
+      </div>
+      
+      <div class="form-group">
+        <label for="vehicleModel">Vechicle Model</label>
+        <input type="text" class="form-control" id="vehicleModel"
+               [(ngModel)]="model.vehicleModel" name="vehicleModel">
+      </div>
+
+       <div class="form-group">
+        <label for="vehicleType">Vechicle Type</label>
+        <input type="text" class="form-control" id="vehicleType"
+               [(ngModel)]="model.vehicleType" name="vehicleType">
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!vehicleForm.form.valid">Submit</button>
+      <button type="button" class="btn btn-default" (click)="newVehicle(); vehicleForm.reset()">Add Vechicle</button>
+    </form>
+  </div>
+
+  <div [hidden]="!submitted">
+    <h2>You submitted the following:</h2>
+    <div class="row">
+      <div class="col-xs-3">Name</div>
+      <div class="col-xs-9  pull-left">{{ model.vehicleName }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Color</div>
+      <div class="col-xs-9 pull-left">{{ model.color }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Model</div>
+      <div class="col-xs-9 pull-left">{{ model.vehicleModel }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">TYPE</div>
+      <div class="col-xs-9 pull-left">{{ model.vehicleType }}</div>
+    </div>
+    <br>
+    <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+  </div>
+</div>
